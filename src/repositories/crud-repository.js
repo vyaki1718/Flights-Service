@@ -1,3 +1,6 @@
+const { StatusCodes } = require("http-status-codes");
+const AppError = require("../utils/errors/app-error");
+
 class CrudRepository {
   constructor(model) {
     this.model = model;
@@ -19,6 +22,9 @@ class CrudRepository {
 
   async get(data) {
     const resopnse = await this.model.findByPk(data);
+    if(!resopnse){
+      throw new AppError("Not able to find the resource", StatusCodes.NOT_FOUND)
+    }
     return resopnse;
   }
 
