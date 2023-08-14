@@ -9,10 +9,11 @@ async function createAirplane(data) {
         const airplane = await airplaneReppository.create(data);
         return airplane;
     } catch (error) {
+        // console.log(error)
         if ((error.name = "SequelizeValidationError")) {
             let explaination = [];
             error.errors.forEach((err) => {
-                explaination.push(err.massage);
+                explaination.push(err.message);
             });
 
             throw new AppError(explaination, StatusCodes.BAD_REQUEST);
@@ -27,6 +28,7 @@ async function createAirplane(data) {
 async function getAirplanes() {
     try {
         const airplanes = await airplaneReppository.getAll();
+        console.log("all airplanes");
         return airplanes;
     } catch (error) {
         throw new AppError(
@@ -36,13 +38,16 @@ async function getAirplanes() {
     }
 }
 
-async function getAirplane(id){
+async function getAirplane(id) {
     try {
-        const airplanes = await airplaneReppository.get(id)
-        return airplanes;
+        const airplane = await airplaneReppository.get(id);
+        return airplane;
     } catch (error) {
-        if(error.statusCode===StatusCodes.NOT_FOUND){
-            throw new AppError("The airoplane you requested is not present", StatusCodes.NOT_FOUND)
+        if (error.statusCode === StatusCodes.NOT_FOUND) {
+            throw new AppError(
+                "The airoplane you requested is not present",
+                StatusCodes.NOT_FOUND
+            );
         }
         throw new AppError(
             "can not fetch the data of  airplane",
@@ -56,9 +61,29 @@ async function destroyAirplane(id) {
         const airplanes = await airplaneReppository.destroy(id);
         return airplanes;
     } catch (error) {
-        console.log(error)
-        if(error.statusCode===StatusCodes.NOT_FOUND){
-            throw new AppError("The airoplane you requested to delete is not present", StatusCodes.NOT_FOUND)
+        if (error.statusCode === StatusCodes.NOT_FOUND) {
+            throw new AppError(
+                "The airoplane you requested to delete is not present",
+                StatusCodes.NOT_FOUND
+            );
+        }
+        throw new AppError(
+            "can not fetch the data of all airplanes",
+            StatusCodes.INTERNAL_SERVER_ERROR
+        );
+    }
+}
+
+async function updateAirplane(id, data) {
+    try {
+        const airplane = await airplaneReppository.update(id, data);
+        return airplane;
+    } catch (error) {
+        if (error.statusCode === StatusCodes.NOT_FOUND) {
+            throw new AppError(
+                "The airoplane you requested to update is not present",
+                StatusCodes.NOT_FOUND
+            );
         }
         throw new AppError(
             "can not fetch the data of all airplanes",
@@ -70,5 +95,6 @@ module.exports = {
     createAirplane,
     getAirplanes,
     getAirplane,
-    destroyAirplane
+    destroyAirplane,
+    updateAirplane,
 };

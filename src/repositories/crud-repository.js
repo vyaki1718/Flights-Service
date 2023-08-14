@@ -17,20 +17,20 @@ class CrudRepository {
         id: data,
       },
     });
-    // console.log(response)
 
-    if(!response){
+    if (!response) {
       throw new AppError("Not able to find the resource", StatusCodes.NOT_FOUND)
-    } 
+    }
     return response;
   }
 
   async get(data) {
-    const resopnse = await this.model.findByPk(data);
-    if(!resopnse){
+    const response = await this.model.findByPk(data);
+   
+    if (!response) {
       throw new AppError("Not able to find the resource", StatusCodes.NOT_FOUND)
     }
-    return resopnse;
+    return response;
   }
 
   async getAll() {
@@ -44,7 +44,11 @@ class CrudRepository {
         id: id,
       },
     });
-    return resopnse;
+    if (response.length == 0) {
+      throw new AppError("Not able to find the resource", StatusCodes.NOT_FOUND)
+    }
+
+    return response;
   }
 }
 

@@ -1,10 +1,10 @@
 
 
 class AppError extends Error{
-    constructor(massage, statusCode){
-        super(massage);
+    constructor(message, statusCode){
+        super(message);
         this.statusCode=statusCode;
-        this.explaination=massage
+        this.explaination=message
     }
 }
 

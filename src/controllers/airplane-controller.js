@@ -3,13 +3,11 @@ const { AirplaneService } = require("../services");
 
 const { ErrorResponse, SuccessResponse } = require("../utils/common");
 
-
 /***
  * post:/airplanes/
  * req.body. {modelNumber:"airbus340", capacity:100}
  */
 async function createAirplane(req, res) {
-    console.log("airplaneroutes");
     try {
         const airplane = await AirplaneService.createAirplane({
             modelNumber: req.body.modelNumber,
@@ -19,7 +17,6 @@ async function createAirplane(req, res) {
         SuccessResponse.data = airplane;
         return res.status(StatusCodes.CREATED).json(SuccessResponse);
     } catch (error) {
-        // console.log(error)
         ErrorResponse.error = error;
         console.log(error);
         return res.status(error.statusCode).json(ErrorResponse);
@@ -33,7 +30,6 @@ async function getAirplanes(req, res) {
         return res.status(StatusCodes.OK).json(SuccessResponse);
     } catch (error) {
         ErrorResponse.error = error;
-
         return res.status(error.statusCode).json(ErrorResponse);
     }
 }
@@ -62,7 +58,22 @@ async function destroyAirplane(req, res) {
         SuccessResponse.data = airplane;
         return res.status(StatusCodes.OK).json(SuccessResponse);
     } catch (error) {
-        // console.log(ErrorResponse)
+        ErrorResponse.error = error;
+        return res.status(error.statusCode).json(ErrorResponse);
+    }
+}
+
+/**patch:/airplanes/:id */
+
+async function updateAirplnae(req, res) {
+    try {
+        const airplane = await AirplaneService.updateAirplane(req.params.id, {
+            modelNumber: req.body.modelNumber,
+            capacity: req.body.capacity,
+        });
+        SuccessResponse.data = airplane;
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
         ErrorResponse.error = error;
 
         return res.status(error.statusCode).json(ErrorResponse);
@@ -72,5 +83,6 @@ module.exports = {
     createAirplane,
     getAirplanes,
     getAirplane,
-    destroyAirplane
+    destroyAirplane,
+    updateAirplnae,
 };
