@@ -6,13 +6,12 @@ module.exports = {
     queryInterface.addConstraint('Airports',
     {
       type:'FOREIGN KEY',
-      fields:['cityId'],
+      fields:['CityId'],
       name:'city_fkey_constraint',
       references:{
         table:'Cities',
         field:'id'
       },
-      onUpdate:'CASCADE',
       onDelete:'CASCADE'
     }
     )
