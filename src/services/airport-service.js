@@ -1,13 +1,13 @@
 const { StatusCodes } = require("http-status-codes");
-const { AirplaneRepository } = require("../repositories");
+const { AirportRepository } = require("../repositories");
 const AppError = require("../utils/errors/app-error");
 
-const airplaneReppository = new AirplaneRepository();
+const airportRepository = new AirportRepository();
 
-async function createAirplane(data) {
+async function createAirport(data) {
     try {
-        const airplane = await airplaneReppository.create(data);
-        return airplane;
+        const airport = await airportRepository.create(data);
+        return airport;
     } catch (error) {
         // console.log(error)
         if ((error.name = "SequelizeValidationError")) {
@@ -19,81 +19,81 @@ async function createAirplane(data) {
             throw new AppError(explaination, StatusCodes.BAD_REQUEST);
         }
         throw new AppError(
-            "can not create new Airplane object",
+            "can not create new Airport object",
             StatusCodes.INTERNAL_SERVER_ERROR
         );
     }
 }
 
-async function getAirplanes() {
+async function getAirports() {
     try {
-        const airplanes = await airplaneReppository.getAll();
-        return airplanes;
+        const airports = await airportRepository.getAll();
+        return airports;
     } catch (error) {
         throw new AppError(
-            "can not fetch the data of all airplanes",
+            "can not fetch the data of all Airports",
             StatusCodes.INTERNAL_SERVER_ERROR
         );
     }
 }
 
-async function getAirplane(id) {
+async function getAirport(id) {
     try {
-        const airplane = await airplaneReppository.get(id);
-        return airplane;
+        const airport = await airportRepository.get(id);
+        return airport;
     } catch (error) {
         if (error.statusCode === StatusCodes.NOT_FOUND) {
             throw new AppError(
-                "The airoplane you requested is not present",
+                "The Airport you requested is not present",
                 StatusCodes.NOT_FOUND
             );
         }
         throw new AppError(
-            "can not fetch the data of  airplane",
+            "can not fetch the data of  airport",
             StatusCodes.INTERNAL_SERVER_ERROR
         );
     }
 }
 
-async function destroyAirplane(id) {
+async function destroyAirport(id) {
     try {
-        const airplanes = await airplaneReppository.destroy(id);
-        return airplanes;
+        const airport = await airportRepository.destroy(id);
+        return airport;
     } catch (error) {
         if (error.statusCode === StatusCodes.NOT_FOUND) {
             throw new AppError(
-                "The airoplane you requested to delete is not present",
+                "The Airport you requested to delete is not present",
                 StatusCodes.NOT_FOUND
             );
         }
         throw new AppError(
-            "can not fetch the data of all airplanes",
+            "can not fetch the data of all Airports",
             StatusCodes.INTERNAL_SERVER_ERROR
         );
     }
 }
 
-async function updateAirplane(id, data) {
+async function updateAirport(id, data) {
     try {
-        const airplane = await airplaneReppository.update(id, data);
-        return airplane;
+        const airport = await airportRepository.update(id, data);
+        return airport;
     } catch (error) {
         if (error.statusCode === StatusCodes.NOT_FOUND) {
             throw new AppError(
-                "The airoplane you requested to update is not present",
+                "The Airport you requested to update is not present",
                 StatusCodes.NOT_FOUND
             );
         }
         throw new AppError(
-            "can not fetch the data of all airplanes",
+            "can not fetch the data of all Airport",
             StatusCodes.INTERNAL_SERVER_ERROR
         );
     }
 }
 module.exports = {
-    createAirplane,
-    getAirplanes,
-    getAirplane,
-    destroyAirplane,
-    updateAirplane,
+    createAirport,
+    getAirport,
+    getAirports,
+    destroyAirport,
+    updateAirport,
 };
