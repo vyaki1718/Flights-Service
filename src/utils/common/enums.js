@@ -5,6 +5,8 @@ const SEAT_TYPE={
     FIRST_CLASS:'first_class'
 }
 
+
+
 module.exports={
-    SEAT_TYPE
+    SEAT_TYPE,
 }

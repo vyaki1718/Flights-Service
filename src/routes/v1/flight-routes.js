@@ -13,5 +13,7 @@ router.post('/', FlightMiddlewares.validateCreateRequest, FlightController.creat
 //api/v1/flights?trips=MUM-PUN get
 router.get('/', FlightController.getAllFlight);
 
+router.get('/:id', FlightController.getFlight);
+
 
 module.exports=router;
