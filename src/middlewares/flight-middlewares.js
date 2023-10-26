@@ -70,7 +70,6 @@ function validateCreateRequest(req, res, next) {
 }
 
 function validateUpdateSeatsRequest(req,res,next){
-    console.log(req.params)
     if (!req.body.seats) {
         ErrorResponse.messege = "something went wrong while  update seats";
         ErrorResponse.error = { explaination: ["seats not found in the incoming request"] };
